@@ -2,6 +2,7 @@ const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
 
 const fs = require("fs");
+const path = require('path');
 const ObjectUtils = require("../../utils/object");
 
 module.exports = {
@@ -11,8 +12,14 @@ module.exports = {
     }
 
     try {
+      let fileDirectory = path.join(process.cwd(), 'static');
+
+      if (process.env.IS_LOCAL) {
+        fileDirectory = path.join(process.cwd(), 'public/static');
+      }
+
       const content = fs.readFileSync(
-        `public/static/${template}.docx`,
+        `${fileDirectory}/${template}.docx`,
         "binary"
       );
 
